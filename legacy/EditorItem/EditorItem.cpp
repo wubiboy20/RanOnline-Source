@@ -72,11 +72,11 @@ static bool ExportItemCsv(const CString& strInputIsf, const CString& strOutputCs
 	{
 		for (int j = 0; j < GLItemMan::MAX_SID; ++j)
 		{
-			if (!GLItemMan::GetInstance().GetItemNode((WORD)i, (WORD)j))
+			SITEM *pSITEM = GLItemMan::GetInstance().GetItem((WORD)i, (WORD)j);
+			if (!pSITEM)
 				continue;
 
-			CItemNode *pITEMNODE = GLItemMan::GetInstance().GetItemNode((WORD)i, (WORD)j);
-			SITEM &sITEM = pITEMNODE->m_sItem;
+			SITEM &sITEM = *pSITEM;
 			sITEM.SaveCsv(streamFILE);
 		}
 	}
@@ -121,8 +121,8 @@ BOOL CEditorItemApp::InitInstance()
 	LPWSTR *szArgList = CommandLineToArgvW(GetCommandLineW(), &argc);
 	if (argc >= 4 && wcscmp(szArgList[1], L"--export-csv") == 0)
 	{
-		CString strInput = szArgList[2];
-		CString strOutput = szArgList[3];
+		CString strInput(szArgList[2]);
+		CString strOutput(szArgList[3]);
 		
 		InitCommonControlsEx(NULL); // Minimal init for headless mode
 		CWinApp::InitInstance();
