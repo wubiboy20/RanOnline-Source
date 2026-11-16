@@ -4562,7 +4562,7 @@ DWORD GLCHARLOGIC::GET_PK_LEVEL ()
 	// legacy layer gathers the thresholds into a local array before calling
 	// the portable threshold search.
 	const WORD pkStateCount = GLCONST_CHAR::EMPK_STATE_LEVEL;
- GameInt32 pkPoints[EMPK_STATE_LEVEL];
+ GameInt32 pkPoints[GLCONST_CHAR::EMPK_STATE_LEVEL];
 	for ( WORD i = 0; i < pkStateCount; ++i )
 	{
 		pkPoints[i] = GLCONST_CHAR::sPK_STATE[i].nPKPOINT;

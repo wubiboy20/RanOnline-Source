@@ -3861,9 +3861,9 @@ float GLCharacter::GetMoveVelo ()
 	float fDefaultVelo = IsSTATE(EM_ACT_RUN) ? GLCONST_CHAR::cCONSTCLASS[m_CHARINDEX].fRUNVELO : GLCONST_CHAR::cCONSTCLASS[m_CHARINDEX].fWALKVELO;
 	return GameCharacterCalculations::MoveVelocity(
 		fDefaultVelo,
-	,GLCHARLOGIC::GETMOVEVELO()
-	,GLCHARLOGIC::GETMOVE_ITEM()
-	,IsSTATE(EM_ACT_RUN));
+		GLCHARLOGIC::GETMOVEVELO(),
+		GLCHARLOGIC::GETMOVE_ITEM(),
+		IsSTATE(EM_ACT_RUN));
 }
 
 void GLCharacter::VietnamCalculate()
