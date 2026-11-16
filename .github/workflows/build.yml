@@ -24,7 +24,8 @@ jobs:
           if ((Get-Item boost.tgz).Length -lt 100MB) { throw 'Boost download too small, not a real tarball' }
           tar -xzf boost.tgz boost_1_86_0/boost
           New-Item -ItemType Directory -Force legacy\boost186 | Out-Null
-          Move-Item boost_1_86_0\boost legacy\boost186\boost
+          Copy-Item -Recurse -Force boost_1_86_0\boost legacy\boost186\boost
+                    Copy-Item -Recurse -Force boost_1_86_0\boost\* legacy\Tik\Include\boost\
       - name: Prepend Boost 1.86 include dir for all legacy projects
         shell: pwsh
         run: |
