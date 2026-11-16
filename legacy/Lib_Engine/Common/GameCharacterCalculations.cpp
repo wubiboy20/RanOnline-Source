@@ -1187,7 +1187,7 @@ namespace GameCharacterCalculations
         GameUInt32 pkStateCount)
     {
         if ( brightness >= 0 )
-            return std::numeric_limits<GameUInt32>::max();
+            return (std::numeric_limits<GameUInt32>::max)();
 
         GameUInt32 level = 0;
 
