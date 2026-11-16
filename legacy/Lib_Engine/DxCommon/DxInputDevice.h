@@ -11,18 +11,18 @@
 
 //-----------------------------------------------------------------------------------------
 //
-//	"dinput.h" ¿¡ ½ºÄËÄÚµå°¡ µğÆÄÀÎµÇ¾î ÀÖÀ½.
+//	"dinput.h" ì— ìŠ¤ì¼„ì½”ë“œê°€ ë””íŒŒì¸ë˜ì–´ ìˆìŒ.
 
 #include <set>
 
 #include "dinput.h"
 #include "../Common/GameInput.h"
 
-//	Note : ¸¶¿ì½º¿Í Å°º¸µåÀÇ Å° »óÅÂ¸¦ ¾Ë¾Æº¸±â À§ÇØ¼­ »ç¿ëµÇ´Â ÇÃ·¡±×µéÀÌ´Ù.
-//		¸¶¿ì½ºÀÇ°æ¿ì DXKEY_PRESSED, DXKEY_DRAG ¸ğµÎ ¸¶¿ì½º ¹öÆ°ÀÌ ´­·¯Á® ÀÖ´Â »óÅÂ¸¦
-//		³ªÅ¸³»¸ç ÇÏ³ª´Â ´Ü¼ø ´©¸£°í ÀÖ´Â »óÅÂ, ¶ÇÇÏ³ª´Â µå·¡±×»óÅÂ¸¦ °¢°¢ ³ªÅ¸³½´Ù.
-//		ÀÌµé µÎ ÇÃ·¡±×´Â µ¿½Ã¿¡ ³ªÅ¸³ªÁö ¾ÊÀ¸¸ç ¸¸¾à ´©¸¥ »óÅÂÀÎÁö È®ÀÎÇÒ·Á¸é
-//		DXKEY_DOWNED ·Î È®ÀÎÇÏ´Â °ÍÀÌ ÁÁ´Ù. ex) ( dwMLeft&DXKEY_DOWNED )
+//	Note : ë§ˆìš°ìŠ¤ì™€ í‚¤ë³´ë“œì˜ í‚¤ ìƒíƒœë¥¼ ì•Œì•„ë³´ê¸° ìœ„í•´ì„œ ì‚¬ìš©ë˜ëŠ” í”Œë˜ê·¸ë“¤ì´ë‹¤.
+		ë§ˆìš°ìŠ¤ì˜ê²½ìš° DXKEY_PRESSED, DXKEY_DRAG ëª¨ë‘ ë§ˆìš°ìŠ¤ ë²„íŠ¼ì´ ëˆŒëŸ¬ì ¸ ìˆëŠ” ìƒíƒœë¥¼
+//		ë‚˜íƒ€ë‚´ë©° í•˜ë‚˜ëŠ” ë‹¨ìˆœ ëˆ„ë¥´ê³  ìˆëŠ” ìƒíƒœ, ë˜í•˜ë‚˜ëŠ” ë“œë˜ê·¸ìƒíƒœë¥¼ ê°ê° ë‚˜íƒ€ë‚¸ë‹¤.
+//		ì´ë“¤ ë‘ í”Œë˜ê·¸ëŠ” ë™ì‹œì— ë‚˜íƒ€ë‚˜ì§€ ì•Šìœ¼ë©° ë§Œì•½ ëˆ„ë¥¸ ìƒíƒœì¸ì§€ í™•ì¸í• ë ¤ë©´
+//		DXKEY_DOWNED ë¡œ í™•ì¸í•˜ëŠ” ê²ƒì´ ì¢‹ë‹¤. ex) ( dwMLeft&DXKEY_DOWNED )
 //
 //
 enum EMDXKEYFLAGS
@@ -65,7 +65,7 @@ enum DX_MOUSEKEYS
 //	BYTE	m_JoyState[DXJOY_SIZE];
 //
 //public:
-//	//	Note : Å°º¸µå Å° »óÅÂ.
+//	//	Note : í‚¤ë³´ë“œ í‚¤ ìƒíƒœ.
 //	//
 //	DWORD GetKeyState( BYTE ScanCode )
 //	{		
@@ -84,7 +84,7 @@ enum DX_MOUSEKEYS
 //	~DxJoystickDevice();
 //	DxJoystickDevice();
 //
-//	//	Note : ½Ì±ÛÅæ Å¬·¡½º Á¦¾î.
+//	//	Note : ì‹±ê¸€í†¤ í´ë˜ìŠ¤ ì œì–´.
 //	//
 //public:
 //	static DxJoystickDevice& GetInstance();
@@ -132,18 +132,18 @@ private:
 	DWORD					m_dwMouseElements;
 	DIDEVICEOBJECTDATA		m_MouseDidodata[MOUSE_BUFFER_SIZE];
 
-	//	Å°º¸µå »óÅÂ
+	//	í‚¤ë³´ë“œ ìƒíƒœ
 	BYTE	m_KeyState[256];	
-	BYTE	m_KeyStateLast[256];	//	Áö³­ ¹ø ÇÁ·¹ÀÓÀÇ ¸¶Áö¸· »óÅÂ(UP/DOWN)
+	BYTE	m_KeyStateLast[256];	//	ì§€ë‚œ ë²ˆ í”„ë ˆì„ì˜ ë§ˆì§€ë§‰ ìƒíƒœ(UP/DOWN)
 	PUTSET	m_mapKeyDown;
 
-	//	¸¶¿ì½º »óÅÂ
+	//	ë§ˆìš°ìŠ¤ ìƒíƒœ
 	BYTE	m_MouseState[8];
-	BYTE	m_MouseStateBack[8];	//	DRAGÀÌ¸é ÀúÀå
-	BYTE	m_MouseStateLast[8];	//	Áö³­ ¹ø ÇÁ·¹ÀÓÀÇ ¸¶Áö¸· »óÅÂ(UP/DOWN)
+	BYTE	m_MouseStateBack[8];	//	DRAGì´ë©´ ì €ì¥
+	BYTE	m_MouseStateLast[8];	//	ì§€ë‚œ ë²ˆ í”„ë ˆì„ì˜ ë§ˆì§€ë§‰ ìƒíƒœ(UP/DOWN)
 	PUTSET	m_mapMouseKeyDown;
 	DWORD	m_dwLastTime[8];
-	BOOL	m_bMouseMove;			//	¸¶¿ì½º°¡ ÀÌµ¿Çß³ª?
+	BOOL	m_bMouseMove;			//	ë§ˆìš°ìŠ¤ê°€ ì´ë™í–ˆë‚˜?
 
 	BOOL	m_bUpdateInputState;
 
@@ -182,9 +182,20 @@ protected:
 
 public:
 	virtual ~DxInputDevice();
+	// GameInput::IInputDevice implementation.
+	virtual void Initialize(void* windowHandle) override;
+	virtual void Shutdown() override;
+	virtual void Update(float time, float elapsedTime,
+	                    bool defaultWindow, bool inGame) override;
+	virtual GameInput::GameKeyState GetKeyState(GameInput::GameKey key) const override;
+	virtual bool IsKeyDown(GameInput::GameKey key) const override;
+	virtual bool IsKeyReleased(GameInput::GameKey key) const override;
+	virtual GameInput::GameMouseState GetMouseState() const override;
+	virtual void GetMouseMove(int& dx, int& dy, int& dz) const override;
+	virtual void GetMouseLocate(int& x, int& y, int& z) const override;
 
 public:
-	//	Note : Å°º¸µå Å° »óÅÂ.
+	//	Note : í‚¤ë³´ë“œ í‚¤ ìƒíƒœ.
 	//
 	DWORD GetKeyState ( BYTE ScanCode )
 	{		
@@ -196,7 +207,7 @@ public:
 
 	void SetKeyState( BYTE ScanCode, EMDXKEYFLAGS dwFlag )	{ m_KeyState[ScanCode] |= dwFlag; }
 
-	//	Note : ¸¶¿ì½ºÀÇ ´ÜÀ§ ÀÌµ¿ °Å¸®.
+	//	Note : ë§ˆìš°ìŠ¤ì˜ ë‹¨ìœ„ ì´ë™ ê±°ë¦¬.
 	//
 	void GetMouseMove ( int &_ndx, int &_ndy, int &_ndz )
 	{
@@ -209,7 +220,7 @@ public:
 	int GetMouseMoveY () { return m_MouseMoveDY; }
 	int GetMouseMoveZ () { return m_MouseMoveDZ; }
 
-	//	Note : ¸¶¿ì½ºÀÇ ÇöÁ¦ À§Ä¡.
+	//	Note : ë§ˆìš°ìŠ¤ì˜ í˜„ì œ ìœ„ì¹˜.
 	//
 	void GetMouseLocate ( int &_nx, int &_ny, int &_nz )
 	{
@@ -222,9 +233,9 @@ public:
 	int GetMouseLocateY () { return m_MouseLocateY; }
 	int GetMouseLocateZ () { return m_MouseLocateZ; }
 
-	void ScreenOverArray( BOOL bDefWin );	// °¡ÀåÀÚ¸®¿¡ ´êÀ¸¸é ¹İ´ëÆíÀ¸·Î Ä¿¼­¸¦ ¿Å±ä´Ù.
+	void ScreenOverArray( BOOL bDefWin );	// ê°€ì¥ìë¦¬ì— ë‹¿ìœ¼ë©´ ë°˜ëŒ€í¸ìœ¼ë¡œ ì»¤ì„œë¥¼ ì˜®ê¸´ë‹¤.
 
-	//	Note : ¸¶¿ì½º Å° »óÅÂ.
+	//	Note : ë§ˆìš°ìŠ¤ í‚¤ ìƒíƒœ.
 	//
 	DWORD GetMouseState ( DX_MOUSEKEYS MKey )
 	{
@@ -236,7 +247,7 @@ public:
 
 	BOOL IsMouseInGameScreen( BOOL bDefWin );
 
-	//	Note : ½Ì±ÛÅæ Å¬·¡½º Á¦¾î.
+	//	Note : ì‹±ê¸€í†¤ í´ë˜ìŠ¤ ì œì–´.
 	//
 public:
 	static DxInputDevice& GetInstance();
