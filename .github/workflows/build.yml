@@ -56,7 +56,7 @@ jobs:
           if errorlevel 1 exit /b 1
           lib /nologo /OUT:legacy\Tik\Library\ggsrvlib.lib ggstub.obj
           if errorlevel 1 exit /b 1
-          cl /nologo /c /EHsc /I legacy\Tik\TbbLib\include legacy\tbbstub.cpp /Fo:tbbstub.obj
+          cl /nologo /c /EHsc /MD /I legacy\Tik\TbbLib\include legacy\tbbstub.cpp /Fo:tbbstub.obj
           if errorlevel 1 exit /b 1
           lib /nologo /OUT:legacy\Tik\Library\tbb.lib tbbstub.obj
           if errorlevel 1 exit /b 1
@@ -81,4 +81,4 @@ jobs:
           name: ran-juver-win32
           path: out
           if-no-files-found: warn
-# trigger run 8
+# trigger run 9
