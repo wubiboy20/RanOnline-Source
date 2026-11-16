@@ -25,21 +25,50 @@ jobs:
           tar -xzf boost.tgz boost_1_86_0/boost
           New-Item -ItemType Directory -Force legacy\boost186 | Out-Null
           Copy-Item -Recurse -Force boost_1_86_0\boost legacy\boost186\boost
-                    Copy-Item -Recurse -Force boost_1_86_0\boost\* legacy\Tik\Include\boost\
-      - name: Prepend Boost 1.86 include dir for all legacy projects
+          Copy-Item -Recurse -Force boost_1_86_0\boost\* legacy\Tik\Include\boost\
+      - name: Prepend include dirs (Boost 1.86, GMTool) for all legacy projects
         shell: pwsh
         run: |
           $props = @'
           <Project>
             <ItemDefinitionGroup>
               <ClCompile>
-                <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)boost186;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+                <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)boost186;$(MSBuildThisFileDirectory)GMTool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
               </ClCompile>
             </ItemDefinitionGroup>
           </Project>
           '@
           Set-Content -Path 'legacy\Directory.Build.props' -Value $props
+      - name: Fetch dependency libraries (this repo gitignores *.lib; take them from the EP7 x64 fork)
+        shell: pwsh
+        run: |
+          git clone --depth 1 https://github.com/wubiboy20/RANOnline-x64.git deps-x64
+          New-Item -ItemType Directory -Force legacy\Tik\Library | Out-Null
+          Copy-Item deps-x64\Dependency\directx\x86\*.lib legacy\Tik\DXLib\
+          Copy-Item deps-x64\Dependency\commonlib\*.lib legacy\Tik\Library\
+          Get-ChildItem legacy\Tik\DXLib, legacy\Tik\Library | Select-Object Name, Length
+      - name: Build stub libraries (ggsrvlib, tbb, HShield are not in this repo)
+        shell: cmd
+        run: |
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86
+          if errorlevel 1 exit /b 1
+          cl /nologo /c legacy\ggstub.cpp /Fo:ggstub.obj
+          if errorlevel 1 exit /b 1
+          lib /nologo /OUT:legacy\Tik\Library\ggsrvlib.lib ggstub.obj
+          if errorlevel 1 exit /b 1
+          cl /nologo /c /EHsc /I legacy\Tik\TbbLib\include legacy\tbbstub.cpp /Fo:tbbstub.obj
+          if errorlevel 1 exit /b 1
+          lib /nologo /OUT:legacy\Tik\Library\tbb.lib tbbstub.obj
+          if errorlevel 1 exit /b 1
+          if not exist legacy\Tik\TbbLib\lib mkdir legacy\Tik\TbbLib\lib
+          copy /y legacy\Tik\Library\tbb.lib legacy\Tik\TbbLib\lib\tbb.lib
+          cl /nologo /c legacy\emptylib.cpp /Fo:empty.obj
+          if errorlevel 1 exit /b 1
+          lib /nologo /OUT:legacy\Tik\Library\HShield.lib empty.obj
+          if errorlevel 1 exit /b 1
       - name: Build legacy solution Release Win32
+        env:
+          CL: /D_NO_HACKSHIELD
         run: msbuild legacy\RanOnline.sln /m /p:Configuration=Release /p:Platform=Win32
       - name: Collect binaries
         shell: pwsh
@@ -52,6 +81,4 @@ jobs:
           name: ran-juver-win32
           path: out
           if-no-files-found: warn
-# trigger run 6
-
-# trigger run 7
+# trigger run 8
