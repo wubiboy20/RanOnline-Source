@@ -1214,14 +1214,14 @@ GameInput::GameKeyState DxInputDevice::GetKeyState(GameInput::GameKey key) const
 
 bool DxInputDevice::IsKeyDown(GameInput::GameKey key) const
 {
-	return ( GetKeyState(key) & GameInput::GameKeyState::Downed )
-	       == GameInput::GameKeyState::Downed;
+	return ( static_cast<int>( GetKeyState(key) ) & static_cast<int>( GameInput::GameKeyState::Downed ) )
+	       == static_cast<int>( GameInput::GameKeyState::Downed );
 }
 
 bool DxInputDevice::IsKeyReleased(GameInput::GameKey key) const
 {
-	return ( GetKeyState(key) & GameInput::GameKeyState::Up )
-	       == GameInput::GameKeyState::Up;
+	return ( static_cast<int>( GetKeyState(key) ) & static_cast<int>( GameInput::GameKeyState::Up ) )
+	       == static_cast<int>( GameInput::GameKeyState::Up );
 }
 
 // --- Mouse ---
