@@ -46,6 +46,8 @@ jobs:
           New-Item -ItemType Directory -Force legacy\Tik\Library | Out-Null
           Copy-Item deps-x64\Dependency\directx\x86\*.lib legacy\Tik\DXLib\
           Copy-Item deps-x64\Dependency\commonlib\*.lib legacy\Tik\Library\
+          Copy-Item deps-x64\Dependency\lzo\*.lib legacy\Tik\Library\
+          Copy-Item legacy\GMTool\GMTool.h legacy\EditorItem\
           Get-ChildItem legacy\Tik\DXLib, legacy\Tik\Library | Select-Object Name, Length
       - name: Build stub libraries (ggsrvlib, tbb, HShield are not in this repo)
         shell: cmd
@@ -66,10 +68,16 @@ jobs:
           if errorlevel 1 exit /b 1
           lib /nologo /OUT:legacy\Tik\Library\HShield.lib empty.obj
           if errorlevel 1 exit /b 1
-      - name: Build legacy solution Release Win32
+      - name: Build legacy solution Release Win32 (two passes; harvest built libs between passes)
         env:
           CL: /D_NO_HACKSHIELD
-        run: msbuild legacy\RanOnline.sln /m /p:Configuration=Release /p:Platform=Win32
+        shell: pwsh
+        run: |
+          msbuild legacy\RanOnline.sln /m /p:Configuration=Release /p:Platform=Win32
+          Get-ChildItem -Path RanOnline-Build\Release -Recurse -Filter *.lib | Copy-Item -Destination legacy\Tik\Library\ -Force
+          Get-ChildItem legacy\Tik\Library | Select-Object Name, Length
+          msbuild legacy\RanOnline.sln /m /p:Configuration=Release /p:Platform=Win32
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Collect binaries
         shell: pwsh
         run: |
@@ -81,4 +89,4 @@ jobs:
           name: ran-juver-win32
           path: out
           if-no-files-found: warn
-# trigger run 9
+# trigger run 10
