@@ -4066,11 +4066,11 @@ HRESULT CInnerInterface::InitDeviceObjects ( LPDIRECT3DDEVICEQ pd3dDevice )
 
 	{	//	Auto System entry button
 		m_pAutoPilotButton = new CAutoPilotButton;
-		m_pAutoPilotButton->Create ( AUTOPILOT_BUTTON, "AUTOPILOT_BUTTON_IMAGE", UI_FLAG_RIGHT | UI_FLAG_BOTTOM );
+		m_pAutoPilotButton->Create ( CAutoPilotButton::AUTOPILOT_BUTTON, "AUTOPILOT_BUTTON_IMAGE", UI_FLAG_RIGHT | UI_FLAG_BOTTOM );
 		m_pAutoPilotButton->CreateSubControl ();
 		RegisterControl ( m_pAutoPilotButton );
-		ShowGroupFocus ( AUTOPILOT_BUTTON );
-		HideGroup ( AUTOPILOT_BUTTON );
+		ShowGroupFocus ( CAutoPilotButton::AUTOPILOT_BUTTON );
+		HideGroup ( CAutoPilotButton::AUTOPILOT_BUTTON );
 	}
 
 	{	//	Auto System window
