@@ -12,10 +12,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: microsoft/setup-msbuild@v2
-      - name: Stage solution at repo root (sln project paths are root-relative)
-        run: Copy-Item legacy\RanOnline.sln RanOnline.sln
+      - name: Fix solution project paths (sln paths are root-relative)
+        shell: pwsh
+        run: |
+          $sln = 'legacy\RanOnline.sln'
+          (Get-Content $sln) -replace '"legacy\\', '"' | Set-Content $sln
+      - name: Install full Boost headers (bundled Tik boost is partial)
+        shell: pwsh
+        run: |
+          Invoke-WebRequest -Uri 'https://boostorg.jfrog.io/artifactory/main/release/1.86.0/source/boost_1_86_0.tar.gz' -OutFile boost.tgz
+          tar -xzf boost.tgz boost_1_86_0/boost
+          New-Item -ItemType Directory -Force legacy\boost186 | Out-Null
+          Move-Item boost_1_86_0\boost legacy\boost186\boost
+      - name: Prepend Boost 1.86 include dir for all legacy projects
+        shell: pwsh
+        run: |
+          $props = @'
+          <Project>
+            <ItemDefinitionGroup>
+              <ClCompile>
+                <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)boost186;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+              </ClCompile>
+            </ItemDefinitionGroup>
+          </Project>
+          '@
+          Set-Content -Path 'legacy\Directory.Build.props' -Value $props
       - name: Build legacy solution Release Win32
-        run: msbuild RanOnline.sln /m /p:Configuration=Release /p:Platform=Win32
+        run: msbuild legacy\RanOnline.sln /m /p:Configuration=Release /p:Platform=Win32
       - name: Collect binaries
         shell: pwsh
         run: |
