@@ -1,3 +1,4 @@
+#include "stdafx.h"
 // GameInput.cpp
 //
 // Portable game-input contract source stub.
