@@ -26,6 +26,8 @@ extern "C" void __cdecl CleanupGameguardAuth()
 // GetAuthQuery()/CheckAuthAnswer() as success, so no-op implementations
 // returning 0 make GameGuard auth always pass, consistent with
 // InitGameguardAuth() above reporting success without a GameGuard server.
+#include <windows.h>
+#include <string.h>
 #include "Tik/Include/ggsrv.h"
 
 CCSAuth2::CCSAuth2()
