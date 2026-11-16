@@ -47,7 +47,17 @@ jobs:
           Copy-Item deps-x64\Dependency\directx\x86\*.lib legacy\Tik\DXLib\
           Copy-Item deps-x64\Dependency\commonlib\*.lib legacy\Tik\Library\
           Copy-Item deps-x64\Dependency\lzo\*.lib legacy\Tik\Library\
-          Copy-Item legacy\GMTool\GMTool.h legacy\EditorItem\
+          $shim = @'
+          #pragma once
+          // Shim for the missing GMTOOL.h: EditorItem only needs the GMTOOL namespace
+          // functions, implemented in Lib_Client (see Lib_Client/DxServerInstance.h).
+          namespace GMTOOL
+          {
+              HRESULT Create( const char* szAppPath );
+              void CleanUp();
+          }
+          '@
+          Set-Content -Path legacy\EditorItem\GMTOOL.h -Value $shim
           Get-ChildItem legacy\Tik\DXLib, legacy\Tik\Library | Select-Object Name, Length
       - name: Build stub libraries (ggsrvlib, tbb, HShield are not in this repo)
         shell: cmd
@@ -67,6 +77,16 @@ jobs:
           cl /nologo /c legacy\emptylib.cpp /Fo:empty.obj
           if errorlevel 1 exit /b 1
           lib /nologo /OUT:legacy\Tik\Library\HShield.lib empty.obj
+          if errorlevel 1 exit /b 1
+          cl /nologo /c /I legacy\Tik\Include legacy\ijlstub.cpp /Fo:ijlstub.obj
+          if errorlevel 1 exit /b 1
+          lib /nologo /OUT:legacy\Tik\Library\ijl15.lib ijlstub.obj
+          if errorlevel 1 exit /b 1
+          if not exist "legacy\=Library" mkdir "legacy\=Library"
+          copy /y legacy\Tik\Library\ijl15.lib "legacy\=Library\ijl15.lib"
+          cl /nologo /c /I legacy\Lib_Network legacy\apexstub.cpp /Fo:apexstub.obj
+          if errorlevel 1 exit /b 1
+          lib /nologo /OUT:"legacy\=Library\AHClientInterface.lib" apexstub.obj
           if errorlevel 1 exit /b 1
       - name: Build legacy solution Release Win32 (two passes; harvest built libs between passes)
         env:
@@ -89,4 +109,4 @@ jobs:
           name: ran-juver-win32
           path: out
           if-no-files-found: warn
-# trigger run 10
+# trigger run 11
