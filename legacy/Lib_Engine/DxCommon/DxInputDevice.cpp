@@ -27,7 +27,7 @@
 //BOOL CALLBACK EnumObjectsCallback( const DIDEVICEOBJECTINSTANCE* pdidoi, VOID* pContext );
 //BOOL CALLBACK EnumJoysticksCallback( const DIDEVICEINSTANCE* pdidInstance, VOID* pContext );
 //
-////	Note : ì‹±ê¸€í†¤ í´ë˜ìŠ¤ ì œì–´.
+////	Note : ½Ì±ÛÅæ Å¬·¡½º Á¦¾î.
 //DxJoystickDevice& DxJoystickDevice::GetInstance()
 //{
 //	static DxJoystickDevice Instance;
@@ -440,7 +440,7 @@
 //--------------------------------------------------------------------------------------------------------------------
 //								D	x		I	n	p	u	t		D	e	v	i	c	e
 //--------------------------------------------------------------------------------------------------------------------
-//	Note : ì‹±ê¸€í†¤ í´ë˜ìŠ¤ ì œì–´.
+//	Note : ½Ì±ÛÅæ Å¬·¡½º Á¦¾î.
 //
 DxInputDevice& DxInputDevice::GetInstance()
 {
@@ -554,7 +554,7 @@ HRESULT DxInputDevice::InitDeviceObjects ( LPDIRECT3DDEVICEQ pd3dDevice, BOOL bD
 	m_bCAPTUREMOUSE = bCAPTUREMOUSE;
 	m_bDEVICEMOUSE = bDEVICEMOUSE;
 
-	//	Note : DirectInput  ê°ì²´ ì¸í„°í˜ì´ìŠ¤ ìƒì„± 
+	//	Note : DirectInput  °´Ã¼ ÀÎÅÍÆäÀÌ½º »ı¼º 
 	//
 	hr = DirectInput8Create ( GetModuleHandle(NULL),
 		DIRECTINPUT_VERSION, IID_IDirectInput8, (void **)&m_pDInput, NULL );
@@ -564,7 +564,7 @@ HRESULT DxInputDevice::InitDeviceObjects ( LPDIRECT3DDEVICEQ pd3dDevice, BOOL bD
 		return hr;
 	}
 	    
-	//	Note : KeyBoard Device ìƒì„± 
+	//	Note : KeyBoard Device »ı¼º 
 	//
 	hr = m_pDInput->CreateDevice ( GUID_SysKeyboard, &m_pDInputKeyboardDev, NULL );
 	if( FAILED(hr) )
@@ -573,7 +573,7 @@ HRESULT DxInputDevice::InitDeviceObjects ( LPDIRECT3DDEVICEQ pd3dDevice, BOOL bD
 		return hr;
 	}
 
-	//	Note : í‚¤ë³´ë“œ í¬ë§· ë°©ì‹ ì…‹íŒ… 
+	//	Note : Å°º¸µå Æ÷¸Ë ¹æ½Ä ¼ÂÆÃ 
 	//
 	hr = m_pDInputKeyboardDev->SetDataFormat ( &c_dfDIKeyboard );
 	if( FAILED(hr) )
@@ -582,7 +582,7 @@ HRESULT DxInputDevice::InitDeviceObjects ( LPDIRECT3DDEVICEQ pd3dDevice, BOOL bD
 		return hr;
 	}
 
-	//	Note : ìœˆë„ìš°ì™€ Deviceê°€ ì—°ê²°ë˜ì–´ ìƒí˜¸ì‘ìš©ì„ ì–´ë–»ê²Œ í• ê²ƒì¸ì§€ë¥¼ ì…‹ì—….
+	//	Note : À©µµ¿ì¿Í Device°¡ ¿¬°áµÇ¾î »óÈ£ÀÛ¿ëÀ» ¾î¶»°Ô ÇÒ°ÍÀÎÁö¸¦ ¼Â¾÷.
 	//
 	m_dwKeyboardCoopFlags = (DISCL_NONEXCLUSIVE|DISCL_FOREGROUND|DISCL_NOWINKEY);
 	hr = m_pDInputKeyboardDev->SetCooperativeLevel ( m_hWnd, m_dwKeyboardCoopFlags );
@@ -608,7 +608,7 @@ HRESULT DxInputDevice::InitDeviceObjects ( LPDIRECT3DDEVICEQ pd3dDevice, BOOL bD
 		}
 	}
 
-	//	í‚¤ë³´ë“œ ë²„í¼ ì´ˆê¸°í™”
+	//	Å°º¸µå ¹öÆÛ ÃÊ±âÈ­
     {	
         DIPROPDWORD dipdw;
 
@@ -625,12 +625,12 @@ HRESULT DxInputDevice::InitDeviceObjects ( LPDIRECT3DDEVICEQ pd3dDevice, BOOL bD
 		}
     }
 
-	//	Note : Input deviceë¥¼ ì—‘ì„¸ìŠ¤ í•˜ì—¬ í™œì„±í™” ì‹œí‚¨ë‹¤ 
+	//	Note : Input device¸¦ ¿¢¼¼½º ÇÏ¿© È°¼ºÈ­ ½ÃÅ²´Ù 
 	//
 	hr =  m_pDInputKeyboardDev->Acquire();
 
 
-	//	Note : ë§ˆìš°ìŠ¤ ë””ë°”ì´ìŠ¤ ìƒì„± 
+	//	Note : ¸¶¿ì½º µğ¹ÙÀÌ½º »ı¼º 
 	//
 	hr = m_pDInput->CreateDevice( GUID_SysMouse, &m_pDInputMouseDev, NULL );
 	if( FAILED( hr ) )
@@ -639,7 +639,7 @@ HRESULT DxInputDevice::InitDeviceObjects ( LPDIRECT3DDEVICEQ pd3dDevice, BOOL bD
 		return hr;
 	}
 
-	// ë§ˆìš°ìŠ¤ ë°ì´íƒ€ í¬ë§· ì…‹íŒ… 
+	// ¸¶¿ì½º µ¥ÀÌÅ¸ Æ÷¸Ë ¼ÂÆÃ 
 	hr = m_pDInputMouseDev->SetDataFormat( &c_dfDIMouse2 );
 	if( FAILED(hr) )
 	{
@@ -647,7 +647,7 @@ HRESULT DxInputDevice::InitDeviceObjects ( LPDIRECT3DDEVICEQ pd3dDevice, BOOL bD
 		return hr;
 	}
 
-	//ë§ˆìš°ìŠ¤ ë ˆë²¨ ì…‹
+	//¸¶¿ì½º ·¹º§ ¼Â
 	hr = m_pDInputMouseDev->SetCooperativeLevel( m_hWnd, m_dwMouseCoopFlags );
 	if( hr == DIERR_UNSUPPORTED  && ( m_dwMouseCoopFlags == (DISCL_BACKGROUND|DISCL_EXCLUSIVE)) )
 	{
@@ -655,7 +655,7 @@ HRESULT DxInputDevice::InitDeviceObjects ( LPDIRECT3DDEVICEQ pd3dDevice, BOOL bD
 		return hr;
 	}
     
-	//	ë§ˆìš°ìŠ¤ ë²„í¼ ì´ˆê¸°í™”
+	//	¸¶¿ì½º ¹öÆÛ ÃÊ±âÈ­
     {
         DIPROPDWORD dipdw;
         dipdw.diph.dwSize       = sizeof(DIPROPDWORD);
@@ -668,7 +668,7 @@ HRESULT DxInputDevice::InitDeviceObjects ( LPDIRECT3DDEVICEQ pd3dDevice, BOOL bD
             return hr;
 	}
 
-	//	Note : Input deviceë¥¼ ì—‘ì„¸ìŠ¤ í•˜ì—¬ í™œì„±í™” ì‹œí‚¨ë‹¤ 
+	//	Note : Input device¸¦ ¿¢¼¼½º ÇÏ¿© È°¼ºÈ­ ½ÃÅ²´Ù 
 	//
 	m_pDInputMouseDev->Acquire();
 
@@ -878,7 +878,7 @@ void DxInputDevice::UpdateKeyState  ()
 	{
 		BYTE nScanCode = (*iter);
 	
-		//	ëˆŒëŸ¬ì§„ ìƒíƒœ
+		//	´­·¯Áø »óÅÂ
 		if ( (m_KeyState[nScanCode] & DXKEY_IDLE) && (m_KeyStateLast[nScanCode] & DXKEY_DOWN) )
 		{
 			m_KeyState[nScanCode] = DXKEY_PRESSED;
@@ -935,7 +935,7 @@ void DxInputDevice::UpdateMouseState( BOOL bDefWin, BOOL bGame )
 		if( !IsMouseInGameScreen( bDefWin ) )	return;
 	}
 
-	//// ë§ˆìš°ìŠ¤ì˜ í¬ì¸í„°ê°€ ê²Œì„í™”ë©´ì•ˆì— ìˆì„ë•Œë§Œ ë§ˆìš°ìŠ¤ ìƒíƒœ ì—…ë°ì´íŠ¸
+	//// ¸¶¿ì½ºÀÇ Æ÷ÀÎÅÍ°¡ °ÔÀÓÈ­¸é¾È¿¡ ÀÖÀ»¶§¸¸ ¸¶¿ì½º »óÅÂ ¾÷µ¥ÀÌÆ®
 	//POINT ptMouse = { 0, 0 };
 	//GetCursorPos( &ptMouse );
 	//if ( ptMouse.x < rtWindow.left || ptMouse.x > rtWindow.right || ptMouse.y < rtWindow.top || ptMouse.y > rtWindow.bottom )
@@ -1013,14 +1013,14 @@ void DxInputDevice::UpdateMouseState( BOOL bDefWin, BOOL bGame )
 				m_MouseState[nButton] = DXKEY_DUP;
 				bUp = TRUE;
 				//CDebugSet::ToListView ( "DUP" );
-				//CDebugSet::ToView ( "ë”ë¸” í´ë¦­1" );
+				//CDebugSet::ToView ( "´õºí Å¬¸¯1" );
 			}
 			else if ( m_MouseDidodata[i].dwTimeStamp - m_dwLastTime[nButton] < 330 )
 			{
 				m_MouseState[nButton] = DXKEY_DUP;
 				bUp = TRUE;
 				//CDebugSet::ToListView ( "DUP" );
-				//CDebugSet::ToView ( "ë”ë¸” í´ë¦­2" );
+				//CDebugSet::ToView ( "´õºí Å¬¸¯2" );
 			}
 			else if ( !(m_MouseStateLast[nButton] & DXKEY_UP) )
 			{
@@ -1031,7 +1031,7 @@ void DxInputDevice::UpdateMouseState( BOOL bDefWin, BOOL bGame )
 				//CDebugSet::ToListView ( "UP" );
 			}
 
-			//	ë²„íŠ¼ì´ Upë˜ì—ˆì„ ê²½ìš°, ê·¸ ë©”ì‹œì§€ëŠ” ì²˜ë¦¬ê°€ ì™„ë£Œëœê²ƒìœ¼ë¡œ í™•ì¸í•œë‹¤.
+			//	¹öÆ°ÀÌ UpµÇ¾úÀ» °æ¿ì, ±× ¸Ş½ÃÁö´Â Ã³¸®°¡ ¿Ï·áµÈ°ÍÀ¸·Î È®ÀÎÇÑ´Ù.
 			if ( bUp )
 			{
 				m_MouseStateLast[nButton] = DXKEY_UP;
@@ -1050,7 +1050,7 @@ void DxInputDevice::UpdateMouseState( BOOL bDefWin, BOOL bGame )
 	{
 		BYTE nButton = (*iter);
 	
-		//	ëˆŒëŸ¬ì§„ ìƒíƒœ
+		//	´­·¯Áø »óÅÂ
 		if ( (m_MouseState[nButton] & DXKEY_IDLE) && (m_MouseStateLast[nButton] & DXKEY_DOWN) )
 		{
 			if ( m_bMouseMove || (m_MouseStateBack[nButton] & DXKEY_DRAG) )
@@ -1073,11 +1073,11 @@ void DxInputDevice::UpdateMouseState( BOOL bDefWin, BOOL bGame )
 
 		if ( (m_MouseState[nButton] & ~DXKEY_IDLE) )
 		{
-			//CDebugSet::ToListView ("-. ë²„íŠ¼ : %d, ìƒíƒœ %d", nButton, m_MouseState[nButton]);
+			//CDebugSet::ToListView ("-. ¹öÆ° : %d, »óÅÂ %d", nButton, m_MouseState[nButton]);
 		}
 	}
 
-	//	Note : ìœˆë„ìš° ë§ˆìš°ìŠ¤ì—ì„œëŠ” ë‹¤ìŒê³¼ ê°™ì´ ìœ„ì¹˜ë¥¼ ë³€ê²½.
+	//	Note : À©µµ¿ì ¸¶¿ì½º¿¡¼­´Â ´ÙÀ½°ú °°ÀÌ À§Ä¡¸¦ º¯°æ.
 	//
 	if ( !m_bDEVICEMOUSE )
 	{
@@ -1090,7 +1090,7 @@ void DxInputDevice::UpdateMouseState( BOOL bDefWin, BOOL bGame )
 	}
 	else
 	{
-		//	Note : ë§ˆìš°ìŠ¤ ìœ„ì¹˜ ìœˆë„ìš° ì˜ì—­ì•ˆìœ¼ë¡œ ì œí•œ.
+		//	Note : ¸¶¿ì½º À§Ä¡ À©µµ¿ì ¿µ¿ª¾ÈÀ¸·Î Á¦ÇÑ.
 		//
 		if ( m_MouseLocateX < 0 )					m_MouseLocateX = 0;
 		if ( m_MouseLocateY < 0 )					m_MouseLocateY = 0;
@@ -1147,7 +1147,7 @@ _RETURN:
 	rtWindow.top += ptTOP.y;
 	rtWindow.bottom += ptTOP.y;
 
-	//	Note : ìœˆë„ìš° ë§ˆìš°ìŠ¤ì—ì„œëŠ” ë‹¤ìŒê³¼ ê°™ì´ ìœ„ì¹˜ë¥¼ ë³€ê²½.
+	//	Note : À©µµ¿ì ¸¶¿ì½º¿¡¼­´Â ´ÙÀ½°ú °°ÀÌ À§Ä¡¸¦ º¯°æ.
 	if ( !m_bDEVICEMOUSE )
 	{
 		GetCursorPos ( &m_CursorPos );
@@ -1159,7 +1159,7 @@ _RETURN:
 	}
 	else
 	{
-		//	Note : ë§ˆìš°ìŠ¤ ìœ„ì¹˜ ìœˆë„ìš° ì˜ì—­ì•ˆìœ¼ë¡œ ì œí•œ.
+		//	Note : ¸¶¿ì½º À§Ä¡ À©µµ¿ì ¿µ¿ª¾ÈÀ¸·Î Á¦ÇÑ.
 		if ( m_MouseLocateX < 0 )					m_MouseLocateX = 0;
 		if ( m_MouseLocateY < 0 )					m_MouseLocateY = 0;
 		if ( m_MouseLocateX > m_ptWindowSize.x )	m_MouseLocateX = m_ptWindowSize.x;
