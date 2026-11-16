@@ -12,8 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: microsoft/setup-msbuild@v2
+      - name: Stage solution at repo root (sln project paths are root-relative)
+        run: Copy-Item legacy\RanOnline.sln RanOnline.sln
       - name: Build legacy solution Release Win32
-        run: msbuild legacy\RanOnline.sln /m /p:Configuration=Release /p:Platform=Win32
+        run: msbuild RanOnline.sln /m /p:Configuration=Release /p:Platform=Win32
       - name: Collect binaries
         shell: pwsh
         run: |
