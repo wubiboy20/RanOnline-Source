@@ -68,14 +68,14 @@ static bool ExportItemCsv(const CString& strInputIsf, const CString& strOutputCs
 	SITEM::SaveCsvHead(streamFILE);
 
 	// Export all items
-	for (int i = 0; i < MAX_MID; ++i)
+	for (int i = 0; i < GLItemMan::MAX_MID; ++i)
 	{
-		for (int j = 0; j < MAX_SID; ++j)
+		for (int j = 0; j < GLItemMan::MAX_SID; ++j)
 		{
-			if (!GLItemMan::GetInstance().m_ppItem[i][j])
+			if (!GLItemMan::GetInstance().GetItemNode((WORD)i, (WORD)j))
 				continue;
 
-			CItemNode *pITEMNODE = GLItemMan::GetInstance().m_ppItem[i][j];
+			CItemNode *pITEMNODE = GLItemMan::GetInstance().GetItemNode((WORD)i, (WORD)j);
 			SITEM &sITEM = pITEMNODE->m_sItem;
 			sITEM.SaveCsv(streamFILE);
 		}
@@ -117,7 +117,8 @@ CEditorItemApp theApp;
 BOOL CEditorItemApp::InitInstance()
 {
 	// Check for command-line export mode
-	LPWSTR *szArgList = CommandLineToArgvW(GetCommandLineW(), &int argc);
+	int argc = 0;
+	LPWSTR *szArgList = CommandLineToArgvW(GetCommandLineW(), &argc);
 	if (argc >= 4 && wcscmp(szArgList[1], L"--export-csv") == 0)
 	{
 		CString strInput = szArgList[2];
