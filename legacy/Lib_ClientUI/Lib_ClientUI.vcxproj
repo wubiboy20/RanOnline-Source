@@ -116,6 +116,8 @@
     <ClCompile Include="Interface\AdminMessageDisplay.cpp" />
     <ClCompile Include="Interface\AttendanceBookWindow.cpp" />
     <ClCompile Include="Interface\AudioOption.cpp" />
+    <ClCompile Include="Interface\AutoPilotButton.cpp" />
+    <ClCompile Include="Interface\AutoSystem.cpp" />
     <ClCompile Include="Interface\BasicAnimationBox.cpp" />
     <ClCompile Include="Interface\BasicButton.cpp" />
     <ClCompile Include="Interface\BasicCarrat.cpp" />
