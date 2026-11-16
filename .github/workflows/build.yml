@@ -20,7 +20,8 @@ jobs:
       - name: Install full Boost headers (bundled Tik boost is partial)
         shell: pwsh
         run: |
-          Invoke-WebRequest -Uri 'https://boostorg.jfrog.io/artifactory/main/release/1.86.0/source/boost_1_86_0.tar.gz' -OutFile boost.tgz
+          curl.exe -fL -o boost.tgz 'https://archives.boost.io/release/1.86.0/source/boost_1_86_0.tar.gz'
+          if ((Get-Item boost.tgz).Length -lt 100MB) { throw 'Boost download too small, not a real tarball' }
           tar -xzf boost.tgz boost_1_86_0/boost
           New-Item -ItemType Directory -Force legacy\boost186 | Out-Null
           Move-Item boost_1_86_0\boost legacy\boost186\boost
