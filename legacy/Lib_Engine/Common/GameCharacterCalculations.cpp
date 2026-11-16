@@ -1,3 +1,4 @@
+#include "stdafx.h"
 // GameCharacterCalculations.cpp
 //
 // Portable character combat calculation implementations.
