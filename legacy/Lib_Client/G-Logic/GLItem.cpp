@@ -140,6 +140,7 @@ BOOL SITEM::LoadFile ( basestream &SFile, bool bPastLoad  )
 			{
 				SFile >> dwVer;
 				SFile >> dwSize;
+				long lBlockPos = SFile.GetfTell();
 
 				if( bPastLoad )
 				{
@@ -286,12 +287,14 @@ BOOL SITEM::LoadFile ( basestream &SFile, bool bPastLoad  )
 						return FALSE;
 					}
 				}
+				SFile.SetOffSet ( lBlockPos + dwSize );
 			}break;
 
 		case SITEM::FILE_SSUIT:
 			{
 				SFile >> dwVer;
 				SFile >> dwSize;
+				long lBlockPos = SFile.GetfTell();
 
 				if ( dwVer==0x0100 )
 				{
@@ -391,12 +394,14 @@ BOOL SITEM::LoadFile ( basestream &SFile, bool bPastLoad  )
 					CDebugSet::ErrorVersion( "ITEM::SSUIT", dwVer );
 					SFile.SetOffSet ( SFile.GetfTell()+dwSize );
 				}
+				SFile.SetOffSet ( lBlockPos + dwSize );
 			}break;
 
 		case SITEM::FILE_SDRUG:
 			{
 				SFile >> dwVer;
 				SFile >> dwSize;
+				long lBlockPos = SFile.GetfTell();
 
 				if ( dwVer==0x0100 )
 				{
@@ -424,12 +429,14 @@ BOOL SITEM::LoadFile ( basestream &SFile, bool bPastLoad  )
 					CDebugSet::ErrorVersion( "ITEM::SDRUG", dwVer );
 					SFile.SetOffSet ( SFile.GetfTell()+dwSize );
 				}
+				SFile.SetOffSet ( lBlockPos + dwSize );
 			}break;
 
 		case SITEM::FILE_SSKILLBOOK:
 			{
 				SFile >> dwVer;
 				SFile >> dwSize;
+				long lBlockPos = SFile.GetfTell();
 
 				if ( dwVer==0x0100 )
 				{
@@ -457,12 +464,14 @@ BOOL SITEM::LoadFile ( basestream &SFile, bool bPastLoad  )
 					CDebugSet::ErrorVersion( "ITEM::SSKILLBOOK", dwVer );
 					SFile.SetOffSet ( SFile.GetfTell()+dwSize );
 				}
+				SFile.SetOffSet ( lBlockPos + dwSize );
 			}break;
 
 		case SITEM::FILE_SGENERATE:
 			{
 				SFile >> dwVer;
 				SFile >> dwSize;
+				long lBlockPos = SFile.GetfTell();
 
 				if ( dwVer==0x0100 )
 				{
@@ -490,12 +499,14 @@ BOOL SITEM::LoadFile ( basestream &SFile, bool bPastLoad  )
 					CDebugSet::ErrorVersion( "ITEM::SGENERATE", dwVer );
 					SFile.SetOffSet ( SFile.GetfTell()+dwSize );
 				}
+				SFile.SetOffSet ( lBlockPos + dwSize );
 			}break;
 
 		case SITEM::FILE_SGRINDING:
 			{
 				SFile >> dwVer;
 				SFile >> dwSize;
+				long lBlockPos = SFile.GetfTell();
 
 				if (ITEM::SGRINDING::VERSION==dwVer )
 				{
@@ -550,6 +561,7 @@ BOOL SITEM::LoadFile ( basestream &SFile, bool bPastLoad  )
 					CDebugSet::ErrorVersion( "ITEM::SGRINDING", dwVer );
 					SFile.SetOffSet ( SFile.GetfTell()+dwSize );
 				}
+				SFile.SetOffSet ( lBlockPos + dwSize );
 			}break;
 
 		case SITEM::FILE_BOX:
