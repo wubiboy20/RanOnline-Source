@@ -12,7 +12,7 @@
 
 namespace CCrypt
 {
-	BOOL	bCryptRCC = TRUE;
+	BOOL	bCryptRCC = FALSE;
 	BOOL	bEngineDebug = TRUE;
 
 	void  LoadSetting( const TCHAR *szRootPath )
