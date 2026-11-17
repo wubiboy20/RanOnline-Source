@@ -1046,23 +1046,21 @@ namespace ITEM
 
 		SFile >> sNativeID.dwID;
 		SFile >> sGroupID.dwID;
-		SFile >> dwData;	emLevel = (EMITEMLEVEL)dwData;
-		SFile >> dwData;
-		EMEXITEM_TYPE exemItemType = (EMEXITEM_TYPE) dwData;
-		emItemType = EXITEM_TO_ITEM(exemItemType);
-
 		SFile >> strName;
-		SFile >> fExpMultiple;
+		SFile >> dwData;	emLevel = (EMITEMLEVEL)dwData;
 		SFile >> wGradeAttack;
 		SFile >> wGradeDefense;
-		SFile >> dwFlags;
-		SFile >> dwBuyPrice;
-		SFile >> dwSellPrice;
+		SFile >> fExpMultiple;
 		SFile >> wReserved1;
 		SFile >> wReserved2;
 		SFile >> wReserved3;
 		SFile >> wReserved4;
 		SFile >> wReserved5;
+		SFile >> dwFlags;
+		SFile >> dwBuyPrice;
+		SFile >> dwSellPrice;
+		SFile >> dwData;	emItemType = (EMITEM_TYPE) dwData;
+		SFile >> dwData;	emReqBright = (EMBRIGHT) dwData;
 		SFile >> dwReqCharClass;
 		SFile >> dwReqSchool;
 		SFile.ReadBuffer ( &sReqStats, sizeof(sReqStats) );
@@ -1070,26 +1068,23 @@ namespace ITEM
 		SFile >> wReqLevelUP;
 		SFile >> wReqPA;
 		SFile >> wReqSA;
-		SFile >> dwData;	emReqBright = (EMBRIGHT) dwData;
 		SFile >> dwCoolTime;
-		SFile >> dwData;	emCoolType = (EMCOOL_TYPE) dwData;		
+		SFile >> dwData;	emCoolType = (EMCOOL_TYPE) dwData;
+		SFile >> dwReqContributionPoint;
 		SFile >> wInvenSizeX;
 		SFile >> wInvenSizeY;
 		SFile >> sICONID.dwID;
-		SFile >> strFieldFile;
-		SFile >> strInventoryFile;
+		SFile >> strSelfBodyEffect;
 		SFile >> strTargBodyEffect;
 		SFile >> strTargetEffect;
-		SFile >> strSelfBodyEffect;
+		SFile >> strFieldFile;
+		SFile >> strInventoryFile;
 
-		for ( int i=0; i<GLCI_NUM_6CLASS; ++i )
+		for ( int i=0; i<GLCI_NUM_8CLASS; ++i )
 			SFile >> strWearingFileRight[i];
 
-		for ( int i=0; i<GLCI_NUM_6CLASS; ++i )
-			SFile >> strWearingFileLeft[i];
-
-		SFile >> strPetWearingFile;
 		SFile >> strComment;
+		SFile >> strPetWearingFile;
 		SFile >> sSubID.dwID;
 		SFile >> wPosX;
 		SFile >> wPosY;

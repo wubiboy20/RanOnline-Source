@@ -111,13 +111,13 @@ namespace ITEM
 
 		case 0x101:
 			{
-				SBOX_ITEM_101 _sOLD_ITEMS[ITEM_SIZE];
-				SFile.ReadBuffer ( _sOLD_ITEMS, sizeof(SBOX_ITEM_101)*ITEM_SIZE );
+				SNATIVEID _sOLD_ITEMS[ITEM_SIZE];
+				SFile.ReadBuffer ( _sOLD_ITEMS, sizeof(DWORD)*ITEM_SIZE );
 
 				for ( int i=0; i<ITEM_SIZE; ++i )
 				{
-					sITEMS[i].nidITEM = _sOLD_ITEMS[i].nidITEM;
-					sITEMS[i].dwAMOUNT = _sOLD_ITEMS[i].dwAMOUNT;
+					sITEMS[i].nidITEM = _sOLD_ITEMS[i];
+					sITEMS[i].dwAMOUNT = 1;
 				}
 			}break;
 

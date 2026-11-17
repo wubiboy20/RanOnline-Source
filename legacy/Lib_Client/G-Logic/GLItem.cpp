@@ -229,7 +229,9 @@ BOOL SITEM::LoadFile ( basestream &SFile, bool bPastLoad  )
 					}
 					else if ( dwVer == 0x0118 )
 					{
+						long lBlockPos = SFile.GetfTell();
 						sBasicOp.LOAD_118( SFile );
+						SFile.SetOffSet ( lBlockPos + dwSize );
 					}
 					else if ( dwVer == 0x0119 )
 					{

@@ -10,8 +10,6 @@ namespace ITEM
 	BOOL SRANDOM_OPT::LOAD ( basestream &SFile )
 	{
 		SFile.ReadBuffer ( szNAME, SRANDOM_DATA::NAME_LEN );
-		SFile >> bUnableRandomCard;
-		SFile >> bPVPItem;
 		return TRUE;
 	}
 
