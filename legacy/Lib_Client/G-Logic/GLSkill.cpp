@@ -396,8 +396,18 @@ BOOL GLSKILL::LoadFile ( basestream &SFile, bool bPastLoad )
 				}
 				else if ( dwVer==SKILL::SLEARN::VERSION )
 				{
-					GASSERT(sizeof(SKILL::SLEARN)==dwSize);
-					SFile.ReadBuffer ( &m_sLEARN, sizeof(SKILL::SLEARN) );
+					if ( dwSize==sizeof(SKILL::SLEARN) )
+					{
+						SFile.ReadBuffer ( &m_sLEARN, sizeof(SKILL::SLEARN) );
+					}
+					else
+					{
+						// Local patch (2015 data pack): the pack's SLEARN block is 480
+						// bytes (52-byte level records) while this source's SLEARN is 240
+						// bytes. Skip by size to keep the stream in sync; learn data
+						// stays at defaults.
+						SFile.SetOffSet(SFile.GetfTell()+dwSize);
+					}
 				}
 				else
 				{
@@ -519,6 +529,30 @@ BOOL GLSKILL::LoadFile ( basestream &SFile, bool bPastLoad )
 				else if ( dwVer==0x0103 )
 				{
 					m_sSPECIAL_SKILL.LOAD_0103 ( SFile );
+				}
+				else if ( dwVer==0x0102 )
+				{
+					// Local patch (2015 data pack): no parser in this source matches
+					// the pack's SPECIAL_SKILL 0x0102 layout, and its dwSize (520) is a
+					// nominal struct size, not the serialized length (106/125 bytes).
+					// Scan forward to the record's FILE_END_DATA marker (0xEDEDEDED)
+					// and leave the stream on it so the block loop ends normally.
+					BYTE byVal = 0;
+					int nEdRun = 0;
+					BOOL bFound = FALSE;
+					for ( int i=0; i<65536; ++i )
+					{
+						if ( !SFile.ReadBuffer ( &byVal, 1 ) )	break;
+						if ( byVal==0xED )
+						{
+							if ( ++nEdRun>=4 )	{ bFound = TRUE; break; }
+						}
+						else	nEdRun = 0;
+					}
+					if ( bFound )
+						SFile.SetOffSet ( SFile.GetfTell() - 4 );
+					else
+						SFile.SetOffSet(SFile.GetfTell()+dwSize);
 				}
 				else
 				{

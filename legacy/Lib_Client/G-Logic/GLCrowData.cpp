@@ -584,18 +584,12 @@ HRESULT SCROWDATA::LoadFile ( basestream &SFile, BOOL bServer, bool bPastLoad )
 				}
 				else if ( dwDataVer==0x0107 )
 				{
-					for( int i=0; i<EMMAXATTACK; ++i )
-						m_sCrowAttack[i] = SCROWATTACK();
-
-					DWORD dwNum(0);
-					SFile >> dwNum;
-					for( DWORD i=0; i<dwNum; ++ i )
-					{
-						SCROWATTACK	sCrowAttack;
-						sCrowAttack.LOAD_0107( SFile );
-						if ( i >=EMMAXATTACK )	continue;
-						m_sCrowAttack[i] = sCrowAttack;
-					}
+					// Local patch (2015 data pack): the pack's crow attack layout does not
+					// match LOAD_0107 in this source; field-parsing it desyncs the stream
+					// and a later string read throws. Skip the block by its size instead,
+					// like unknown versions. Crow attack data stays at defaults.
+					CDebugSet::ErrorVersion( "SCROWDATA::SCROWATTACK", dwDataVer );
+					SFile.SetOffSet ( SFile.GetfTell() + dwDataSize );
 				}
 				else if ( SCROWATTACK::VERSION==dwDataVer )
 				{
