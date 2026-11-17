@@ -75,6 +75,7 @@ private:
 
 private:
 	int		m_nIndex;
+	float	m_fReqTimer;
 	int		m_nServerState[MAX_SERVER_NUMBER];
 
 private:
