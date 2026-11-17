@@ -42,6 +42,7 @@ CSelectServerPage::~CSelectServerPage ()
 void CSelectServerPage::CreateSubControl ()
 {
 	CD3DFontPar* pFont9 = DxFontMan::GetInstance().LoadDxFont ( _DEFAULT_FONT, 9, _DEFAULT_FONT_FLAG );
+	CD3DFontPar* pFont12 = DxFontMan::GetInstance().LoadDxFont ( _DEFAULT_FONT, 12, _DEFAULT_FONT_FLAG );
 
 	if ( COuterInterface::GetInstance().IsCHANNEL() ) // 채널
 	{
@@ -92,7 +93,7 @@ void CSelectServerPage::CreateSubControl ()
 	{
 		m_pServerList = new CBasicTextBoxEx;
 		m_pServerList->CreateSub ( this, "SELECT_SERVER_LIST", UI_FLAG_DEFAULT, SELECT_SERVER_LIST );
-		m_pServerList->SetFont ( pFont9 );
+		m_pServerList->SetFont ( pFont12 );
 		m_pServerList->SetTextAlign ( TEXT_ALIGN_CENTER_X | TEXT_ALIGN_CENTER_Y );
 		m_pServerList->SetPartInterval ( fLIST_PART_INTERVAL );
 		m_pServerList->CreateMouseClick ( dwCLICKCOLOR );
@@ -204,7 +205,7 @@ BOOL CSelectServerPage::InitServerPage ()
 					strCombine.Format ( "%d %s", sInfo.nGroupIndex, ID2GAMEEXTEXT ("SERVER_NAME",0) );
 
 					{	//	서버 이름
-						int nIndex = m_pServerList->AddTextNoSplit ( strCombine, NS_UITEXTCOLOR::DEFAULT );
+						int nIndex = m_pServerList->AddTextNoSplit ( strCombine, NS_UITEXTCOLOR::RED );
 						m_pServerList->SetTextData ( nIndex, sInfo.nGroupIndex );
 					}
 
@@ -251,7 +252,7 @@ BOOL CSelectServerPage::InitServerPage ()
 				strCombine.Format ( "%s(%d/%d)", ID2GAMEEXTEXT ("SERVER_NAME"), i, j );
 
 				{	//	서버 이름
-					int nIndex = m_pServerList->AddTextNoSplit ( strCombine, NS_UITEXTCOLOR::DEFAULT );
+					int nIndex = m_pServerList->AddTextNoSplit ( strCombine, NS_UITEXTCOLOR::RED );
 					m_pServerList->SetTextData ( nIndex, i );
 				}
 
