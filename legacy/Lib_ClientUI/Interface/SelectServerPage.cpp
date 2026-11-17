@@ -234,7 +234,6 @@ BOOL CSelectServerPage::InitServerPage ()
 			{
 				m_nIndex = 0;
 				m_pServerList->SetSelectPos ( 0 );
-				m_pServerState->SetSelectPos ( 0 );
 			}
 
 			const int nTotalLine = m_pServerList->GetTotalLine ();
