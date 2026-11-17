@@ -28,6 +28,7 @@ const	float	CSelectServerPage::fMAX_PERCENT = 0.7f;
 CSelectServerPage::CSelectServerPage () :
 	m_pServerInfo ( NULL ),
 	m_nIndex ( nOUTOFRANGE ),
+	m_fReqTimer ( 0.0f ),
 	m_pServerList ( NULL ),
 	m_pServerState ( NULL ),
 	m_pSelectServerChannel ( NULL )
@@ -229,6 +230,13 @@ BOOL CSelectServerPage::InitServerPage ()
 				}
 			}
 
+			if ( nUSING_SERVER_AMOUNT > 0 && m_nIndex == nOUTOFRANGE )
+			{
+				m_nIndex = 0;
+				m_pServerList->SetSelectPos ( 0 );
+				m_pServerState->SetSelectPos ( 0 );
+			}
+
 			const int nTotalLine = m_pServerList->GetTotalLine ();
 			const int nLinePerOneView = m_pServerList->GetVisibleLine ();
 			m_pScrollBar->SetVisibleSingle ( FALSE );
@@ -329,6 +337,29 @@ void CSelectServerPage::Update ( int x, int y, BYTE LB, BYTE MB, BYTE RB, int nS
 	{
 		if ( !m_pServerInfo ) 
 			InitServerPage ();
+
+		if ( m_pServerList && m_pServerList->GetTotalLine () <= 0 )
+		{
+			m_fReqTimer += fElapsedTime;
+			if ( m_fReqTimer > 3.0f )
+			{
+				m_fReqTimer = 0.0f;
+				m_pServerInfo = NULL;
+				CNetClient* pNetClient = DxGlobalStage::GetInstance().GetNetClient ();
+				if ( pNetClient->IsOnline () )
+				{
+					pNetClient->SndReqServerInfo ();
+				}
+				else if ( pNetClient->ConnectLoginServer ( RANPARAM::LoginAddress, RANPARAM::nLoginPort ) > NET_ERROR )
+				{
+					pNetClient->SndReqServerInfo ();
+				}
+			}
+		}
+		else
+		{
+			m_fReqTimer = 0.0f;
+		}
 
 		{
 			CBasicScrollThumbFrame* const pThumbFrame = m_pScrollBar->GetThumbFrame ();
