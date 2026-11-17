@@ -92,7 +92,7 @@ BOOL CStringMemory::Open (	LPCSTR _szZipFileName,
 		int nVersion;
 		memcpy( &nVersion, m_pBufferMem, sizeof(int) );
 //		if( nVersion > 0 && CRijndael::VERSION >= nVersion )
-		if( CRijndael::VERSION == nVersion )
+		if( nVersion > 0 && CRijndael::VERSION >= nVersion )
 		{
 			m_nVersion = nVersion;
 			m_oRijndael.Initialize( m_nVersion, CRijndael::sm_Version[nVersion-1].c_str(), CRijndael::sm_KeyLength[nVersion-1], 
