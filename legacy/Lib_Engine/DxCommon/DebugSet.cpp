@@ -852,15 +852,15 @@ namespace CDebugSet
 	std::string strErrorFile_LogFileName	= "DebugSetErrorFile.txt";		//error file log filename
 	std::string strErrorCode_LogFileName	= "DebugSetErrorCode.txt";	//error code log filename
 
-	BOOL	m_bErrorVersion_MessageBox	= TRUE;	//display message box for version error
+	BOOL	m_bErrorVersion_MessageBox	= FALSE;	//display message box for version error
 	BOOL	m_bErrorVersion_WriteLog	= TRUE;	//write log file for version error
 
-	BOOL	m_bErrorFile_MessageBox		= TRUE;	//display message box for file read Error
+	BOOL	m_bErrorFile_MessageBox		= FALSE;	//display message box for file read Error
 	BOOL	m_bErrorFile_WriteLog		= TRUE;	//write log file for file read error
 	BOOL	m_bErrorFile_Remember		= TRUE;	//remember the error filename to avoid repeat
 	BOOL	m_bErrorFile_ClipBoard		= TRUE;	//copy the error filename to clipboard for easy search
 
-	BOOL	m_bErrorCode_MessageBox		= TRUE;	//display message box for code error
+	BOOL	m_bErrorCode_MessageBox		= FALSE;	//display message box for code error
 	BOOL	m_bErrorCode_WriteLog		= TRUE;	//write log file for code error
 
 	std::vector<std::string>	m_vecErrorFile; //container for error filename 
