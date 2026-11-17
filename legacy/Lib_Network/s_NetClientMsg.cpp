@@ -61,6 +61,9 @@ void CNetClient::MessageProcessLogin(NET_MSG_GENERIC* nmg)
 	case NET_MSG_SND_ENCRYPT_KEY:
 		MsgEncryptKey(nmg);
 		break;
+	case NET_MSG_HEARTBEAT_CLIENT_REQ:
+		SndHeartbeat();
+		break;
 	default:
 		break;
 	}
